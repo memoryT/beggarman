@@ -11,23 +11,28 @@
 
 import time
 import requests
-from bs4 import BeautifulSoup  #解析html的套件
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 import json
+輸入帳號密碼
+user_account = input("帳號")
+user_password = input("密碼")
 
 driver = webdriver.Firefox() #使用火狐瀏覽器 
 my_options = Options() #用my_options 儲存對於瀏覽器的設定
 
 url = "https://shopee.tw/buyer/login?next=https%3A%2F%2Fshopee.tw%2F"
 
-driver.get(url)
-
-
-driver.find_element(By.CSS_SELECTOR, "[name = loginKey]").send_keys("他媽的蝦皮")
-driver.find_element(By.CSS_SELECTOR, "[name = password]").send_keys("有夠難搞")
-time.sleep(1)
+driver.get(url) #進到蝦皮登錄頁面
+time.sleep(10) #等待(10秒)瀏覽器解析html資料（因為我的網路有點慢）
+driver.find_element(By.CSS_SELECTOR, "[name = loginKey]").send_keys(user_account)
+driver.find_element(By.CSS_SELECTOR, "[name = password]").send_keys(user_password)
 driver.find_elements(By.CSS_SELECTOR, "button")[2].click()
+time.sleep(300) #這段時間內(5分鐘)請盡快完成簡訊驗證登錄
 
-#每次登入都會觸發簡訊驗證，嘗試利用cookie登入
+shopee_cookie = driver.get_cookies() #取出cookie
+with open("shopee.json", "w") as f:
+    f.write(json.dumps(shopee_cookie)) #將cookie寫入shopee.json，檔案存在跟主程式同目錄
+driver.close() #關閉瀏覽器
+
