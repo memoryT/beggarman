@@ -56,4 +56,5 @@ for i in range(15):
 buttons = driver.find_elements(By.XPATH, "//*[text()='領取']")  #所有可領取按鈕
 for button in buttons:
     button.click()
-
+driver.quit()
+print("所有免運券領取完成")
