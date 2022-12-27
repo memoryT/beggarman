@@ -7,7 +7,7 @@ import json
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
-
+from selenium.webdriver.common.keys import Keys
 
 
     # 有cookie之後即可用以下登錄
@@ -45,11 +45,15 @@ except FileNotFoundError:
         f.write(json.dumps(shopee_cookie)) #將cookie寫入shopee.json，檔案存在跟主程式同目錄
 
 
-free_url = "https://shopee.tw/m/free-shipping"
+free_url = "https://shopee.tw/m/free-shipping"  #蝦皮免運頁面
 driver.get(free_url)
-time.sleep(10)
-driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div/div[3]/div/div[1]/div/div[1]/div").click()
-# mySelectElement = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div/div[3]/div/div[1]/div/div[1]/div")
-# dropDownMenu = Select(mySelectElement)
-# WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div/div[2]/div/div[3]/div/div/div[3]/div/div[1]/div/div[1]/div"))).click()
-# dropDownMenu.select_by_visible_text('Professional')
+time.sleep(5)
+scroll_bar = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[2]/div[1]/div/div[2]/div") #定位至滾動軸
+for i in range(15):
+    scroll_bar.send_keys(Keys.PAGE_DOWN)
+    scroll_bar.send_keys(Keys.ARROW_DOWN)
+    time.sleep(1)
+buttons = driver.find_elements(By.XPATH, "//*[text()='領取']")  #所有可領取按鈕
+for button in buttons:
+    button.click()
+
