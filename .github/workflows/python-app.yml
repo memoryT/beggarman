@@ -29,6 +29,8 @@ jobs:
     - name: Install dependencies
       run: python3 -m pip install --upgrade pip
     - run: pip install flake8 pytest
+    - run: pip install request beautifulsoup4
+    - run: pip install selenium
     - name: Lint with flake8
       run: python3 ./s_test_3.py
 
