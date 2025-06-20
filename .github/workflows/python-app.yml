@@ -25,14 +25,10 @@ jobs:
       with:
         python-version: "3.10"
     - name: update
-      run: |
-        sudo apt update && sudo apt upgrade -y
+    - run: sudo apt update && sudo apt upgrade -y
     - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - run: python3 -m pip install --upgrade pip
+    - run: pip install flake8 pytest
     - name: Lint with flake8
-      run: |
-        python3 ./s_test_3.py
+    - run: python3 ./s_test_3.py
 
