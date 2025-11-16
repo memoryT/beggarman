@@ -21,24 +21,25 @@ options.platform_name = "linux"
 options.accept_insecure_certs = True
 print(options.timeouts)
 options.timeouts = {"script":30000, "pageLoad":300000, "implicit":0}
-options.unhandled_prompt_behavior = "dismiss and notify"
+options.unhandled_prompt_behavior = "dismiss and notify" # dismiss, accept, accept and notify, ignore
 options.set_window_rect = True
 options.strict_file_interactability = False
 options.enable_downloads = True
 
-service = webdriver.FirefoxService(port = 59475, log_output=r"./.logtext", service_args=['--log', 'debug'])
+service = webdriver.FirefoxService(port = 59475, log_output=r"./.logtext", service_args=['--log', 'debug']) #fatal, error, warn, info, debug, trace
 print(service.port)
 
 #firefox specific
 # options.add_argument("-headless")
 firefox_profile = webdriver.firefox.firefox_profile.FirefoxProfile()
-firefox_profile.set_preference("javascript.enabled", False)
+# firefox_profile.set_preference("javascript.enabled", False)
 options.profile = firefox_profile
 
 
 driver = webdriver.Firefox(options = options, service = service) #使用火狐瀏覽器 
 driver.maximize_window()
 # driver.install_addon(r"./sidebery-5.3.3.xpi")
+# driver.uninstall_addon(id[id可在安裝時得知])
 driver.implicitly_wait(5)
 
 url = r"https://www.selenium.dev/selenium/web/web-form.html"
